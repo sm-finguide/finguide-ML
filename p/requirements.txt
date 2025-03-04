@@ -1,0 +1,11 @@
+fastapi
+mangum
+pydub
+speechrecognition
+joblib
+scikit-learn
+pandas
+numpy
+shutil
+os
+uvicorn
