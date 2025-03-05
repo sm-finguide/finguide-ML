@@ -19,7 +19,8 @@ def read_root():
 @app.post("/predict")
 async def predict_voice(file: UploadFile = File(...)):
     """음성 파일을 업로드하면 보이스피싱 여부 반환"""
-    temp_dir = "/tmp"  # Lambda에서는 /tmp만 사용 가능
+    #temp_dir = "/tmp"  # Lambda에서는 /tmp만 사용 가능
+    temp_dir = "/tmp" if os.getenv("AWS_LAMBDA_FUNCTION_NAME") else os.getcwd()
 
     file_path = os.path.join(temp_dir, file.filename)
     with open(file_path, "wb") as buffer:
