@@ -8,8 +8,14 @@ vectorizer = joblib.load("vectorizer.pkl")
 def predict_phishing(text):
     """입력된 문장의 보이스피싱 여부 예측"""
     text_vectorized = vectorizer.transform([text])  # 텍스트 벡터화
-    prediction = model.predict(text_vectorized)  # 예측
-    return "보이스피싱" if prediction[0] == 1 else "정상"
+    #prediction = model.predict(text_vectorized)  # 예측
+    #return "보이스피싱" if prediction[0] == 1 else "정상"
+    prediction_prob = model.predict_proba(text_vectorized)
+    phishing_prob = prediction_prob[0][1]
+    if phishing_prob > 0.5:
+        return f"{phishing_prob * 100:.2f}%의 확률로 보이스피싱입니다."
+    else:
+        return f"{(1 - phishing_prob) * 100:.2f}%의 확률로 보이스피싱이 아닙니다."
 
 '''
 # 테스트 실행
